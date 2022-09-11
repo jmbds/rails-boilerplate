@@ -1,0 +1,38 @@
+# RUBY #
+.bundle/
+vendor/bundle/
+.irb_history
+
+# RAILS #
+storage/*
+public/assets/
+.byebug_history
+config/master.key
+public/packs/
+public/packs-test/
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
+# NPM #
+node_modules/
+yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# DOCKER #
+docker/development/home/
+
+# GENERAL #
+.env
+
+# AUTOMATICALLY APPENDED #
+/app/assets/builds/*
+!/app/assets/builds/.keep
