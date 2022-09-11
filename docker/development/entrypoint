@@ -1,0 +1,40 @@
+#!/bin/sh
+set -e
+
+echo "=== PREPARING CACHE FOLDERS ==="
+mkdir -p $APP_PATH/vendor/bundle $APP_PATH/node_modules $APP_PATH/public
+
+echo "=== PREPARING HOME FOLDER ==="
+sudo chown jmbds:jmbds $HOME
+
+echo "=== INSTALLING DEPENDENCIES ==="
+bundle install
+
+echo "=== CLEANING OLD DEPENDENCIES, ASSETS AND LOGS ==="
+bundle clean
+rails assets:clean log:clear tmp:clear
+
+if [ ! -f "$HOME/.setup_complete" ]; then
+  echo "=== SETTING UP PROJECT ==="
+  #chsh -s /bin/zsh
+
+  echo "=== INSTALLING OHMYZSH ==="
+  if [ ! -d "$HOME/.oh-my-zsh" ]; then sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -) --unattended"; fi
+
+  echo "=== SETTING UP DATABASE ==="
+  rails db:create db:schema:load db:migrate db:seed
+
+  touch "$HOME/.setup_complete"
+fi
+
+echo "=== CONFIGURING GIT ==="
+bin/config-git
+
+echo "=== APPLYING LATEST MIGRATIONS ==="
+rails db:migrate
+
+echo "=== COMPILING ASSETS ==="
+rails assets:precompile --trace
+
+echo "=== STARTING WEB SERVER ==="
+puma

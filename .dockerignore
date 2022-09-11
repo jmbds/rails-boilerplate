@@ -1,0 +1,14 @@
+# GENERAL #
+.vscode/
+
+# DOCKER #
+.devcontainer/
+docker/development/
+docker/production/Dockerfile
+
+# GIT #
+.git/
+git/
+
+# RAILS #
+config/master.key

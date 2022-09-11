@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+
+# General dependencies #
+apk add --update bash build-base git nano nodejs postgresql-dev yarn vips
+
+# User setup #
+addgroup -g 1000 -S jmbds
+adduser -u 1000 -S jmbds -G jmbds -s /bin/bash
+
+# Install development dependencies #
+if [ "$RAILS_ENV" = "development" ]; then
+  apk add --update sudo zsh openssh git-crypt
+  echo "jmbds ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/jmbds
+  chmod 0440 /etc/sudoers.d/jmbds
+fi
