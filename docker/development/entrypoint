@@ -33,8 +33,5 @@ bin/config-git
 echo "=== APPLYING LATEST MIGRATIONS ==="
 rails db:migrate
 
-echo "=== COMPILING ASSETS ==="
-rails assets:precompile --trace
-
-echo "=== STARTING WEB SERVER ==="
-puma
+echo "=== START WEB SERVER, JS AND CSS WATCHERS ==="
+bin/dev
